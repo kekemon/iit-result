@@ -7,8 +7,10 @@
 	if(!isset($_SESSION['myusername']) || !isset($_SESSION['mypassword'])){
 		header("location:login.php");
 	}
-
+	
+	require_once("db-connection.php");
 ?>
+
 
 
 <html>
@@ -44,39 +46,6 @@ a, p {
 <body>
 
 
-<?php   
-echo "AA";
-			
-		if($_POST){ 
-			$roll = $_POST['roll']; 
-			$ct = $_POST['ct'];
-			$final = $_POST['final'];
-			$course = $_POST['course'];
-			$type = $_POST['type'];
-			
-			$servername = "localhost";
-			$username = "root";
-			$password = "";
-			$dbname = "iit_db";
-			$tbl_name="result"; // Table name 
-
-			// Create connection
-			$conn = mysqli_connect($servername, $username, $password, $dbname);
-			// Check connection
-			if (!$conn) {
-				echo "Database Connection failed ";
-				echo '<a href="register.php"><button>back</button></a>';
-			}else {
-				for ($i = 0; $i < count($roll); $i++) {
-					$sql = "INSERT INTO $tbl_name (roll, course, type, ct, final) VALUES 
-					('$roll[$i]', '$course', '$type', '$ct[i]', '$final[i]')";
-					echo $sql;
-				}
-			}
-
-			
-		}			
-?> 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">IIT, DU</a>
@@ -94,7 +63,7 @@ echo "AA";
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      <button  onclick="location.href='logout.php';" class="btn btn-outline-success my-2 my-sm-0" type="button">Logout</button>
     </form>
   </div>
 </nav>
@@ -103,6 +72,46 @@ echo "AA";
  
 </body>
    
+<?php   
+			
+		if($_POST){ 
+			$roll = $_POST['roll']; 
+			$ct = $_POST['ct'];
+			$final = $_POST['final'];
+			$course = $_POST['course'];
+			$type = $_POST['type'];
+			
+			$servername = "localhost";
+			$username = "root";
+			$password = "";
+			$dbname = "iit_db";
+			$tbl_name="result"; // Table name 
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+			// Check connection
+			if (!$conn) {
+				echo "Database Connection failed ";
+				echo '<a href="register.php"><button>back</button></a>';
+			}else {
+				$delsql = "DELETE FROM $tbl_name WHERE course='$course' and type='$type'";
+				mysqli_query($conn, $delsql);
+					
+				for ($i = 0; $i < count($roll); $i++) {
+					$sql = "INSERT INTO $tbl_name (roll, course, type, ct, final) VALUES 
+					('$roll[$i]', '$course', '$type', $ct[$i], $final[$i])";
+					if(mysqli_query($conn, $sql) == false) {
+						echo '<script>alert("Error Occured")</script>'; 
+						return;
+					}
+				}
+
+				echo '<h5 align="center">Successfully Added</h5>'; 
+						
+			}
+
+			
+		}			
+?> 
 
 </html>
 

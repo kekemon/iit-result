@@ -8,6 +8,7 @@
 		header("location:login.php");
 	}
 
+	require_once("db-connection.php");
 ?>
 
 
@@ -59,7 +60,7 @@ a, p {
         <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Generate Result</a>
+        <a class="nav-link" href="final-result.php">Generate Result</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -75,38 +76,27 @@ a, p {
 <br>
 
 <div class="row mr-auto ml-auto">
-    <div class="col-md-4">
+<?php 
+	$sql="SELECT * FROM courses";
+
+	$result=mysqli_query($conn, $sql);
+	while($row = $result->fetch_assoc()) {
+	?>
+		<div class="col-md-4">
 		<div class="card border-success mb-4" style="width: 18rem;">
-		  <div class="card-header">MITM 306</div>
+		  <div class="card-header"><?php echo $row['code']?></div>
 		  <div class="card-body">
-			<h5 class="card-title">Web Tech and Internet Computing</h5>
-			<a href="result.php?type=mid&course=mitm-306" class="card-link">Mid</a>
-			<a href="result.php?type=final&course=mitm-306" class="card-link">Final</a>
+			<h5 class="card-title"><?php echo $row['title']?></h5>
+			
+			<a href="result.php?type=mid&course=<?php echo $row['code']?>" class="card-link">Mid</a>
+			<a href="result.php?type=final&course=<?php echo $row['code']?>" class="card-link">Final</a>
 		  </div>
 		</div>
-	</div>
-	
-    <div class="col-md-4">
-		<div class="card border-success mb-4" style="width: 18rem;">
-		  <div class="card-header">MITM 307</div>
-		  <div class="card-body">
-			<h5 class="card-title">Cryptography and Security Mechanisms</h5>
-			<a href="result.php?type=mid&course=mitm-307" class="card-link">Mid</a>
-			<a href="result.php?type=final&course=mitm-307" class="card-link">Final</a>
-		  </div>
 		</div>
-	</div>
-	
-	<div class="col-md-4">
-		<div class="card border-success mb-4" style="width: 18rem;">
-		  <div class="card-header">MITM 308</div>
-		  <div class="card-body">
-			<h5 class="card-title">Software Project Management Studies</h5>
-			<a href="result.php?type=mid&course=mitm-308" class="card-link">Mid</a>
-			<a href="result.php?type=final&course=mitm-309" class="card-link">Final</a>
-		  </div>
-		</div>
-	</div>
+	<?php
+	}
+?>
+    
   </div>
 </body>
     

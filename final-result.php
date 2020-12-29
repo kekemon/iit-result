@@ -8,13 +8,6 @@
 		header("location:login.php");
 	}
 	
-	$type = $_GET['type']; 
-	$course = $_GET['course'];
-	
-	if(!isset($type) || !isset($course)){
-		header("location:index.php");
-	}
-	
 	require_once("db-connection.php");
 ?>
 
@@ -63,7 +56,7 @@ a, p {
         <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="final-result.php">Generate Result</a>
+        <a class="nav-link" href="#">Generate Result</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -73,31 +66,59 @@ a, p {
 </nav>
 <br>
   <form action="result-post.php" method='post'>
-	<input name='course'  value=<?php echo $course ?> hidden/>
-	<input name='type'  value=<?php echo $type ?> hidden/>
 	<table align="center" width="75%" border="0" cellspacing="0" cellpadding="5">
 	  <tr>
 		  <td align="center">Name</td>
 		  <td align="center">Roll</td>
-		  <td align="center">Class Test</td>
-		  <td align="center">Final Test</td>
+		  <td align="center">Final Total</td>
+		  <td align="center">Final Total</td>
+		  <td align="center">Final Total</td>
 	  </tr>
 	<?php
-		$sql="SELECT full_name, student.roll, nvl(ct,0) ct, nvl(final,0) final FROM student LEFT JOIN result ON student.roll=result.roll AND course='$course' and type='$type'";
-		$result=mysqli_query($conn, $sql);
-		while($row = $result->fetch_assoc()) {
-			//echo "<script>  addtoTable('$student_id', '$last_name', '$phone_number', '$book_id', '$title', '$author', '$borrowedDate'); </script>" ;
-			echo "<tr>";
-			echo "<td align=\"center\">$row[full_name]</td>";
-			echo "<td align=\"center\"><input name='roll[]'  value='$row[roll]' readonly/></td>";
-			echo "<td align=\"center\"><input name='ct[]' size='15' type='number' value='$row[ct]' min='0' max='40' required></td>";
-			echo "<td align=\"center\"><input name='final[]' size='15' type='number' value='$row[final]' min='0' max='60' required></td>";
-			echo "</tr>";
+		$sql1="SELECT * from student";
+		$students=mysqli_query($conn, $sql1);
+		
+		$sql2="SELECT * from courses";
+		
+		
+		while($student = $students->fetch_assoc()) {
+			?>
+			<tr>
+			<td align="center"><?php echo $student['full_name']?></td>
+			<td align="center"><?php echo $student['roll']?></td>
+			
+			<?php
+			$roll=$student['roll'];
+			$courses=mysqli_query($conn, $sql2);
+			while($course = $courses->fetch_assoc()) {
+				$code=$course['code'];
+				$midsql="select ct+final sum from result where course='$code' and type='mid' and roll='$roll'";
+				$finalsql="select ct+final sum from result where course='$code' and type='final' and roll='$roll'";
+				
+				$result3=mysqli_query($conn, $midsql)->fetch_assoc();
+				$result4=mysqli_query($conn, $finalsql)->fetch_assoc();
+				$mid =$result3['sum'];
+				$final= $result4['sum'];
+				$avg = ($mid + $final)/2;
+				
+				$max = $avg*1.2;
+				$min = $avg*0.8;
+				$result = $avg;
+				if ($mid>$max ||  $final>$max || $mid<$min  || $final<$min) {
+					$result="20% deviation";
+				}
+				?>
+				<td align="center"><?php echo $result;?></td>
+			
+				<?php
+				//echo $avg;
+			}
+			?>
+			</tr>
+			<?php
 		}
 	?>
-	  <tr>
-		<td colspan="4" align="center"><button  class="btn btn-success" type="submit">Submit</button></td>
-	  </tr>
+	  
 	</table>
   </form>
 </body>
