@@ -27,9 +27,10 @@
 	
     
     if (mysqli_query($conn, $sql)) {
-		//echo "Register successfully";
-        //echo '<a href="login.php"><button>Login</button></a>';
-		header("location:index.php");
+		session_start();
+        $_SESSION['myusername'] = $myusername;
+        $_SESSION['mypassword'] = $my_password_hash;
+        header("location:index.php");
 	} else {
 	echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 	}
