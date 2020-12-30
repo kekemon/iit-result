@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2020 at 11:59 PM
+-- Generation Time: Dec 30, 2020 at 07:58 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -55,27 +55,6 @@ CREATE TABLE `result` (
   `ct` int(11) NOT NULL,
   `final` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `result`
---
-
-INSERT INTO `result` (`roll`, `type`, `course`, `ct`, `final`) VALUES
-('201101', 'final', 'MITM-306', 3, 3),
-('201101', 'mid', 'MITM-306', 3, 1),
-('201101', 'mid', 'MITM-307', 4, 4),
-('201102', 'final', 'MITM-306', 5, 3),
-('201102', 'mid', 'MITM-306', 6, 3),
-('201102', 'mid', 'MITM-307', 4, 4),
-('201103', 'final', 'MITM-306', 3, 3),
-('201103', 'mid', 'MITM-306', 4, 5),
-('201103', 'mid', 'MITM-307', 4, 4),
-('201107', 'final', 'MITM-306', 3, 3),
-('201107', 'mid', 'MITM-306', 3, 4),
-('201107', 'mid', 'MITM-307', 4, 4),
-('201130', 'final', 'MITM-306', 3, 3),
-('201130', 'mid', 'MITM-306', 3, 3),
-('201130', 'mid', 'MITM-307', 4, 44);
 
 -- --------------------------------------------------------
 
