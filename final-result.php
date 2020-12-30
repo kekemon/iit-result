@@ -70,9 +70,9 @@ a, p {
 	  <tr>
 		  <td align="center">Name</td>
 		  <td align="center">Roll</td>
-		  <td align="center">Final Total</td>
-		  <td align="center">Final Total</td>
-		  <td align="center">Final Total</td>
+		  <td align="center">MITM-306</td>
+		  <td align="center">MITM-307</td>
+		  <td align="center">MITM-308</td>
 	  </tr>
 	<?php
 		$sql1="SELECT * from student";
