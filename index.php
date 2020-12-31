@@ -64,13 +64,10 @@ a, p {
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <button onclick="location.href='logout.php';" class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      <button onclick="location.href='logout.php';" class="btn btn-outline-success my-2 my-sm-0" type="button">Logout</button>
     </form>
   </div>
 </nav>
-
-
-<form name="marksForm" action="actionpage_2.php" method="post">
 
  
 <br>
