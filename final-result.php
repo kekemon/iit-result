@@ -56,7 +56,7 @@ a, p {
         <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Generate Result</a>
+        <a class="nav-link" href="final-result.php">Generate Result</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
